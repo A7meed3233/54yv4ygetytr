@@ -33,7 +33,8 @@
     "google-translate-api": "^2.3.0",
     "math-expression-evaluator": "^1.2.17",
     "common-tags": "^1.8.0",
-    "figlet": "^1.2.1"
+    "figlet": "^1.2.1",
+    "google-it": "^1.1.3"
   },
   "engines": {
     "node": "8.4.0"
