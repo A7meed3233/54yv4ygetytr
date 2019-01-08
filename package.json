@@ -29,7 +29,8 @@
     "youtube-info": "^1.2.0",
     "ytdl-core": "^0.20.3",
     "giphy-api": "^2.0.1",
-    "goo.gl": "^0.1.4"
+    "goo.gl": "^0.1.4",
+    "google-translate-api": "^2.3.0"
   },
   "engines": {
     "node": "8.4.0"
