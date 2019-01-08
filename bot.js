@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+client.setMaxListeners(100)
 const prefix = '!!'
  
  
