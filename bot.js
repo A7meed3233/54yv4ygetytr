@@ -11,7 +11,7 @@ const prefix = 'S!'
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`Soon ,`,"https://www.twitch.tv/dggamingbot")
+client.user.setGame(`S!help | S!invite`,"https://www.twitch.tv/dggamingbot")
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
@@ -652,7 +652,7 @@ client.on('message', message => {
             var Canvas = module.require('canvas');
             var jimp = module.require('jimp');
     
-     const w = ['./id1.png','./id2.png','./id3.png','./id4.png','./id5.png'];
+     const w = ['./1.png','./2.png','./3.png','./4.png','./5.png'];
     
              let Image = Canvas.Image,
                  canvas = new Canvas(802, 404),
@@ -850,7 +850,7 @@ client.on("guildMemberAdd", (member) => {
 
 client.on('guildMemberAdd', member => {
      const welcomer =  member.guild.channels.find('name', 'welcome');
-const w = ['./w1.png'];
+const w = ['./wlc.png'];
  
          let Image = Canvas.Image,
             canvas = new Canvas(400, 200),
