@@ -53,6 +53,30 @@ message.channel.sendMessage('**الرجاء الانتظار ريث ما يتم 
 });
 
 
+client.on("message", message => {
+    var prefix = "!!";
+ 
+            var args = message.content.substring(prefix.length).split(" ");
+            if (message.content.startsWith(prefix + "clear")) {
+   if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('⚠ | **ليس لديك صلاحيات**');
+        var msg;
+        msg = parseInt();
+      
+      message.channel.fetchMessages({limit: msg}).then(messages => message.channel.bulkDelete(messages)).catch(console.error);
+      message.channel.sendMessage("", {embed: {
+        title: "Done | تــم",
+        color: 0x00a300,
+        description: ":white_check_mark: | Delete " + args[1] + " Message!",
+        footer: {
+          text: "Slash Bot"
+        }
+      }}).then(msg => {msg.delete(3000)});
+                          }
+
+     
+});
+
+
 
 
 client.on("message", message => {
