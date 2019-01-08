@@ -31,7 +31,8 @@
     "giphy-api": "^2.0.1",
     "goo.gl": "^0.1.4",
     "google-translate-api": "^2.3.0",
-    "math-expression-evaluator": "^1.2.17"
+    "math-expression-evaluator": "^1.2.17",
+    "common-tags": "^1.8.0"
   },
   "engines": {
     "node": "8.4.0"
