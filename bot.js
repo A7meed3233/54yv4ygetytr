@@ -757,9 +757,7 @@ client.on("guildMemberAdd", (member) => {
     }); 
 
 
-client.on('ready', () => {setInterval(function(){ client.guilds.get("523819021359906846").roles.find("name", 'rainbow').edit({color : "RANDOM"})},1000)})
-client.on('ready', () => {setInterval(function(){ client.guilds.get("523819021359906846").roles.find("name", 'Special').edit({color : "RANDOM"})},1000)})
-	
+client.on('ready', () => {setInterval(function(){ client.guilds.get("523819021359906846").roles.find("name", 'rainbow').edit({color : "RANDOM"})},1000)})	
 	
 
 client.on('message', async message => {
