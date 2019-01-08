@@ -1206,6 +1206,161 @@ client.on('message',async message => {
 });
 
 
+const shorten = require('isgd');
+client.on('message', message => {
+        var prefix = "!!";
+
+ if (message.content.startsWith(prefix + 'short')) {
+	   if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+    let args = message.content.split(" ").slice(1);
+  if (!args[0]) return message.channel.send('**Usage**: '+ prefix +'short <رابط>')
+  if (!args[1]) { 
+    shorten.shorten(args[0], function(res) {
+      if (res.startsWith('Error:')) return message.channel.send('**Usage**: '+ prefix +'short <link>');
+      message.channel.send(`اختصار الرابط:**<${res}>**`); 
+    })
+  } else { 
+    shorten.custom(args[0], args[1], function(res) { 
+      if (res.startsWith('Error:')) return message.channel.send(`اختصار الرابط:**${res}**`); 
+      message.channel.send(`اختصار الرابط:**<${res}>**`); 
+ })}}});
+
+
+
+
+
+
+client.on('message', message => {
+    if (message.content.startsWith("!!avatar")) {
+	      if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+        if (message.author.bot) return
+        var mentionned = message.mentions.users.first();
+    var omar;
+      if(mentionned){
+          var omar = mentionned;
+      } else {
+          var omar = message.author;
+          
+      }
+        const embed = new Discord.RichEmbed()
+        .setColor("RANDOM")
+        .setAuthor('Avatar Link :')
+        .setTitle('Click Here')
+        .setURL(`${omar.avatarURL}`)
+        .setImage(`${omar.avatarURL}`)
+        .setFooter('Slash Bot',client.user.avatarURL) 
+      message.channel.sendEmbed(embed);
+    }
+});
+
+
+
+
+
+
+client.on('message', message => {
+  if (message.content.startsWith(prefix + "deafen")) {
+	    if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+    if (!message.member.hasPermission('DEAFEN_MEMBERS')) return;
+  { message.member.setDeaf(true);
+}
+  }
+});
+client.on('message', message => {
+  if (message.content.startsWith(prefix + "vmute")) {
+	    if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+    if (!message.member.hasPermission('DEAFEN_MEMBERS')) return;
+  { message.member.setMute(true);
+}
+  }
+});
+client.on('message', message => {
+  if (message.content.startsWith(prefix + "undeafen")) {
+	    if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+    if (!message.member.hasPermission('DEAFEN_MEMBERS')) return;
+  { message.member.setDeaf(false);
+}
+  }
+});
+client.on('message', message => {
+  if (message.content.startsWith(prefix + "vunmute")) {
+	    if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+    if (!message.member.hasPermission('MUTE_MEMBERS')) return;
+  { message.member.setMute(false);
+}
+  }
+});
+
+
+
+
+
+
+
+
+client.on('message', message =>{
+    let messageArray = message.content.split(" ");
+    let cmd = messageArray[0];
+    let args = messageArray.slice(1);
+    let prefix = '!!';
+
+if(cmd === `${prefix}suggest`) {
+	  if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+    var suggestMessage = message.content.substring(8)
+    let suggestEMBED = new Discord.RichEmbed()
+    .setColor(3447003)
+    .setTitle("New suggest just added!!")
+    .setDescription(`**${suggestMessage}**`)
+    .setFooter(`Suggested By : ${message.author.tag}`);
+    message.delete().catch(O_o=>{}) 
+    let suggests = message.guild.channels.find(`name`, "suggestions");
+    if (!suggests) return message.channel.send("You should make A **suggestions** channel!")
+    suggests.send(suggestEMBED);
+}
+
+});
+
+
+
+
+
+
+
+
+
+client.on('message', message => {
+    var name1 = message.mentions.users.first();
+    var reason = message.content.split(' ').slice(2).join(' ');
+    if(message.content.startsWith(prefix + 'report')) {
+	      if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+ 
+        if(message.author.bot) return;
+        if(!message.guild.channels.find('name', 'reports')) return message.channel.send('**الرجاء صنع روم باسم ``reports`` لارسال الريبوتات اليه**').then(msg => msg.delete(5000));
+    if(!name1) return message.reply('**منشن اسم الشخص الي تبي تبلغ عليه**').then(msg => msg.delete(3000))
+        message.delete();
+    if(!reason) return message.reply('**اكتب وش سوى**').then(msg => msg.delete(3000))
+        message.delete();
+    var abod = new Discord.RichEmbed()
+    .setTitle(`:page_with_curl: **[REPORT]** By: ${message.author.tag}`)
+    .addField('**Report For:**', `${name1}`, true)
+    .addField('**In Channel:**', `${message.channel.name}`, true)
+    .addField('**Reason:**', `${reason}`, true)
+    .setFooter(`${message.author.username}#${message.author.discriminator}`, message.author.avatarURL)
+    .setTimestamp()
+        message.guild.channels.find('name', 'reports').sendEmbed(abod)
+    message.reply('**شكرا على تبليغك**').then(msg => msg.delete(3000));
+    }
+});
+
+
+
 const db = require('quick.db');
 const giphy = require('giphy-api')();    
 const googl = require('goo.gl');  
