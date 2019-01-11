@@ -7,7 +7,7 @@ const prefix = '!!'
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`Soon ,`,"https://www.twitch.tv/dggamingbot")
+client.user.setGame(`!!help | !!invite`,"https://www.twitch.tv/dggamingbot")
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
@@ -1994,6 +1994,7 @@ client.on("message", message => {
 !!report ➾ لارسال تبليغ عن شخص لازم تسوي روم باسم reports
 !!bc ➾ لارسال رساله لجميع الاعضاء
 !!warn ➾ لاعطاء تحذير لشخص
+!!role ➾ لاعطاء رتبة لشخص
 !!rolebc ➾ لارسال رسالة لكل اللي معهم الرتبة اللي تمنشنها
 !!ban [@mention or id] [reason] ➾  لحظر شخص من السيرفر
 !!unban [@mention or id] ➾  لفك الحظر عن الشخص المبند
@@ -2033,6 +2034,7 @@ const embed = new Discord.RichEmbed()
 !!report ➾ To Report Any Person You Must Make "reports" Channel
 !!bc ➾ for massage send message to server members
 !!warn ➾ to give warn to a member
+!!role ➾ to give role to person
 !!rolebc ➾ To send a message to all those with whom the rank is granted
 !!ban [@mention] [reason] ➾ to ban someone from the server
 !!unban ➾ To unblock the person banded
