@@ -7,7 +7,7 @@ const prefix = '!!'
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`!!help | !!invite`,"https://www.twitch.tv/dggamingbot")
+client.user.setGame(`!!help | !!invite`, `${client.guilds.size}`, `${client.users.size}`,"https://www.twitch.tv/dggamingbot")
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
@@ -385,7 +385,7 @@ client.on('message', message => {
 
 
 client.on("guildMemberAdd", m => {
-        let room = m.guild.channels.find(a => a.name === 'welcome'); //
+        let room = m.guild.channels.find(a => a.name === 'invite-cheker'); 
     if (datediff(parseDate(moment(m.user.createdTimestamp).format('l')), parseDate(moment().format('l'))) < 8) {
         m.ban() .then((
             room.send(`**:no_entry: | ${m} Has been banned for: \`fake\`**`)
@@ -413,7 +413,7 @@ client.on("guildMemberAdd", m => {
 client.on('message', message => {
             if(!message.channel.guild) return;
 let args = message.content.split(' ').slice(1).join(' ');
-if (message.content.startsWith('!!bcall')){
+if (message.content.startsWith('!!ubc')){
  if (message.author.id !== '512333311582928916') return message.reply('** هذا الأمر قفط لصاحب البوت و شكراًً **')
  if(!message.author.id === '512333311582928916') return;
 message.channel.sendMessage('جار ارسال الرسالة |✅')
