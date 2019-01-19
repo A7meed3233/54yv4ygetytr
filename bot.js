@@ -56,7 +56,24 @@ client.on("message", message => {
 });
 
 
-
+client.on("ready", async  => {
+setInterval(function(){
+client.channels.find('id', '536191935304695808').setName("W");
+client.channels.find('id', '536191935304695808').setName("We");
+client.channels.find('id', '536191935304695808').setName("Wel");
+client.channels.find('id', '536191935304695808').setName("Welc");
+client.channels.find('id', '536191935304695808').setName("Welco");
+client.channels.find('id', '536191935304695808').setName("Welcom");
+client.channels.find('id', '536191935304695808').setName("Welcome");
+client.channels.find('id', '536191935304695808').setName("Welcome T");
+client.channels.find('id', '536191935304695808').setName("Welcome To");
+client.channels.find('id', '536191935304695808').setName("Welcome To S");
+client.channels.find('id', '536191935304695808').setName("Welcome To Sl");
+client.channels.find('id', '536191935304695808').setName("Welcome To Sla");
+client.channels.find('id', '536191935304695808').setName("Welcome To Slas");
+client.channels.find('id', '536191935304695808').setName("Welcome To Slash");
+  }, 60000);
+});
 
 
 client.on("message", message => {
