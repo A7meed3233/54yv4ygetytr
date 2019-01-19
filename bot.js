@@ -384,30 +384,159 @@ client.on('message', message => {
 
 
 
-client.on("guildMemberAdd", m => {
-        let room = m.guild.channels.find(a => a.name === 'invite-cheker'); 
-    if (datediff(parseDate(moment(m.user.createdTimestamp).format('l')), parseDate(moment().format('l'))) < 8) {
-        m.ban() .then((
-            room.send(`**:no_entry: | ${m} Has been banned for: \`fake\`**`)
-        ));
-    };
-    function parseDate(str) {
-        var mdy = str.split('/');
-        return new Date(mdy[2], mdy[0]-1, mdy[1]);
-    };
-    
-    function datediff(first, second) {
-        return Math.round((second-first)/(1000*60*60*24));
-    };
+client.on('message', message => {
+    if(message.content.startsWith(prefix + "antifake on")) {
+        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+        if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+antijoin[message.guild.id] = {
+onoff: 'On',
+}
+message.channel.send(`**✅ The AntiJoin Is __𝐎𝐍__ !**`)
+          fs.writeFile("./antijoin.json", JSON.stringify(antijoin), (err) => {
+            if (err) return console.error(err)
+            .catch(err => {
+              console.error(err);
+          });
+            });
+          }
+ 
+        })
+ 
+ 
+ 
+client.on('message', message => {
+    if(message.content.startsWith(prefix + "antifake off")) {
+        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+        if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+antijoin[message.guild.id] = {
+onoff: 'Off',
+}
+message.channel.send(`**⛔ The AntiJoin Is __𝐎𝐅𝐅__ !**`)
+          fs.writeFile("./antijoin.json", JSON.stringify(antijoin), (err) => {
+            if (err) return console.error(err)
+            .catch(err => {
+              console.error(err);
+          });
+            });
+          }
+ 
+        })
+         client.on('message', message => {
+          if (!message.channel.guild) return;
+   if(message.content.startsWith(prefix + "setfake")) {
+          let time = message.content.split(" ").slice(1).join(" ");
+       if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+       if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+if (!time) return message.channel.send('Please Type The Account Created Time [Days]');
+let embed = new Discord.RichEmbed()
+.setTitle('**Done The AntiJoin Code Has Been Setup**')
+.addField('Account Create Time:', `${time}.`)
+.addField('Requested By:', `${message.author}`)
+.setThumbnail(message.author.avatarURL)
+.setFooter(`${client.user.username}`)
+message.channel.sendEmbed(embed)
+antijoin[message.guild.id] = {
+created: time,
+onoff: 'On',
+}
+fs.writeFile("./antijoin.json", JSON.stringify(antijoin), (err) => {
+if (err) console.error(err)
+})
+   }})
+ 
+client.on("guildMemberAdd", async member => {
+  if(!antijoin[member.guild.id]) antijoin[member.guild.id] = {
+    onoff: 'Off'
+  }
+  if(antijoin[member.guild.id].onoff === 'Off') return;
+  if(!member.user.bot) return;
+    let accounttime = `${antijoin[member.guild.id].created}`
+    let moment2 = require('moment-duration-format'),
+        moment = require("moment"),
+        date = moment.duration(new Date() - member.user.createdAt).format("d");
+ 
+    if(date < accounttime) {
+      member.ban(`Member account age is lower than ${antijoin[member.guild.id].created} days.`)
+    }
 });
 
 
 
-
-
-
-
-
+const temp = {};
+client.on('message', async message => {
+ if(message.channel.type === "dm") return;
+  if(message.author.bot) return;
+   if(!temp[message.guild.id]) temp[message.guild.id] = {
+    time: "3000",
+     category : 'Temporary Channels',
+      channel : 'انشاء روم مؤقت'
+       }
+        if(message.content.startsWith('!!temp on')){
+         if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+          var ggg= message.guild.createChannel('Temporary Channels', 'category').then(cg => {
+           var ccc =message.guild.createChannel('انشاء روم مؤقت', 'voice').then(ch => {
+            ch.setParent(cg)
+             message.channel.send('**:white_check_mark:  تم تفعيل الخاصية بنجاح **')
+              client.on('message' , message => {
+               if(message.content === '!!temp off') {
+                if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+                 cg.delete()
+                  ch.delete()
+                   message.channel.send('**:white_check_mark:  تم تعطيل الخاصية بنجاح **  ')
+                    }
+                     });
+                      const time = temp[message.guild.id].time
+                       client.on('message' , message => {
+                        if (message.content.startsWith(prefix + "temp time")) {
+                         if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+                          let newTime= message.content.split(' ').slice(1).join(" ")
+                          if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
+                     if(isNaN(newTime)) return message.reply(`** The Time Be Nambers :face_palm: **`);
+                    if(newTime < 1) return message.reply(`**The Time Be Up \`3000s\`**`)
+                       temp[message.guild.id].time = newTime
+                      message.channel.send(`**:white_check_mark:  تم حفظ التغييرات  - \`${newTime}\`**`);
+                     }
+                    });
+                   client.on('voiceStateUpdate', (old, neww) => {
+                  let newUserChannel = neww.voiceChannel
+                 let oldUserChannel = old.voiceChannel
+                temp[message.guild.id].category = cg.id
+               temp[message.guild.id].channel = ch.id
+              let channel = temp[message.guild.id].channel
+             let category = temp[message.guild.id].category
+            if(oldUserChannel === undefined && newUserChannel !== undefined && newUserChannel.id == channel) {
+           neww.guild.createChannel(neww.displayName , 'voice').then(c => {
+          c.setParent(category)
+         let scan = setTimeout(()=>{
+        if(!neww.voiceChannel) {
+       c.delete();
+      client.channels.get(channel).overwritePermissions(neww, {
+     CONNECT:true,
+    SPEAK:true
+   })
+  }
+ }, temp[neww.guild.id].time);
+  c.overwritePermissions(neww, {
+   CONNECT:true,
+    SPEAK:true,
+     MANAGE_CHANNEL:true,
+      MUTE_MEMBERS:true,
+       DEAFEN_MEMBERS:true,
+    MOVE_MEMBERS:true,
+     VIEW_CHANNEL:true
+      })
+       neww.setVoiceChannel(c)
+            })
+             client.channels.get(channel).overwritePermissions(neww, {
+          CONNECT:false,
+           SPEAK:false
+        })
+               }
+              })
+             })
+           })
+          }
+      });
 
 
 client.on('message', message => {
