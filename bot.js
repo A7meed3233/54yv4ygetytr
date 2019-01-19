@@ -7,7 +7,7 @@ const prefix = '!!'
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`!!help | !!invite`,"https://www.twitch.tv/dggamingbot")
+client.user.setGame(`!!help | !!inv`,"https://www.twitch.tv/dggamingbot")
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
@@ -1275,31 +1275,57 @@ client.on('message', message => {
 
 
 
-
-
-
-client.on('message', message => {
-    if (message.content.startsWith("!!avatar")) {
-	      if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+client.on("message", message => {
+const sm = require("string-similarity");
+let members = [];
+let indexes = [];
  
-        if (message.author.bot) return
-        var mentionned = message.mentions.users.first();
-    var omar;
-      if(mentionned){
-          var omar = mentionned;
-      } else {
-          var omar = message.author;
-          
-      }
-        const embed = new Discord.RichEmbed()
-        .setColor("RANDOM")
-        .setAuthor('Avatar Link :')
-        .setTitle('Click Here')
-        .setURL(`${omar.avatarURL}`)
-        .setImage(`${omar.avatarURL}`)
-        .setFooter('Slash Bot',client.user.avatarURL) 
-      message.channel.sendEmbed(embed);
-    }
+let args = message.content.split(" ");
+let prefix = "!!";
+if(args[0].toLowerCase() === (prefix + "avatar")){
+   let members = [];
+let indexes = [];
+ let mentionn = message.mentions.users.first();
+     if(!args[1]) {
+  let x = new Discord.RichEmbed()
+  x.setDescription(`${message.author}'s Profile picture :frame_photo:`)
+  x.setImage(`${message.author.avatarURL}`)
+  x.setColor(`#00fF00`)
+  message.channel.send(x)
+ }
+ 
+ if(mentionn){
+ 
+ 
+ 
+  let m = new Discord.RichEmbed();
+m.setDescription(`${mentionn}'s Profile picture :frame_photo:`)
+m.setImage(`${mentionn.avatarURL}`)
+m.setColor(`#00FF00`)
+message.channel.send(m)
+ }
+ 
+ 
+ 
+ if(!args[1].includes(mentionn)) {
+ message.guild.members.forEach(function(member){
+     members.push(member.user.username);
+     indexes.push(member.id);
+ })
+ 
+ let match = sm.findBestMatch(args.join(' '), members)
+ 
+ let username = match.bestMatch.target;
+ 
+ let member = message.guild.members.get(indexes[members.indexOf(username)]);
+ 
+ let embed = new Discord.RichEmbed()
+ embed.setDescription(`${member}'s Profile picture :frame_photo: `)
+ embed.setImage(`${member.user.avatarURL}`)
+ embed.setColor(`#00FF00`)
+ message.channel.send(embed)
+}
+}
 });
 
 
@@ -1534,7 +1560,7 @@ client.on('message', message => {
 
 client.on('message', message => {
   if (true) {
-if (message.content === '!!invite') {
+if (message.content === '!!inv') {
       message.author.send('https://discordapp.com/api/oauth2/authorize?client_id=531978226742853643&permissions=8&scope=bot |  تفضل رابط البوت     ').catch(e => console.log(e.stack));
  
     }
@@ -1543,7 +1569,7 @@ if (message.content === '!!invite') {
  
  
 client.on('message', message => {
-     if (message.content === "!!invite") {
+     if (message.content === "!!inv") {
      let embed = new Discord.RichEmbed()
   .setAuthor(message.author.username)
   .setColor("#9B59B6")
@@ -1636,11 +1662,6 @@ client.on('message', message => {
   })
 }
 });
-
-
-
-
-
 
 
 
@@ -1905,7 +1926,7 @@ client.on("message", message => {
 !!z5rf ➾ يزخرف الكلام اللي تكتبه بعد الامر
 !!image ➾ صورة السيرفر
 !!contact ➾ لمراسله صاحب البوت
-!!invite ➾ رابط دعوة البوت لـ سيرفرك
+!!inv ➾ رابط دعوة البوت لـ سيرفرك
 !!support ➾ سيرفر الدعم الفني
 !!uptime ➾ لمعرفة مدة عمل البوت
 =========================================================
@@ -1945,7 +1966,7 @@ client.on("message", message => {
 !!z5rf ➾ The words that you write after the command are embellished
 !!image ➾ Server image
 !!contact ➾ Send text to bot owner
-!!invite ➾ Bot invite link
+!!inv ➾ Bot invite link
 !!support ➾ Support server
 !!uptime ➾ To know the duration of the bot
 =========================================================
