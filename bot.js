@@ -384,6 +384,11 @@ client.on('message', message => {
 
 
 
+
+
+
+let antijoin  = {};
+
 client.on('message', message => {
     if(message.content.startsWith(prefix + "antifakeon")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
