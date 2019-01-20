@@ -385,7 +385,7 @@ client.on('message', message => {
 
 
 client.on('message', message => {
-    if(message.content.startsWith(prefix + "antifake on")) {
+    if(message.content.startsWith(prefix + "antifakeon")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
 antijoin[message.guild.id] = {
@@ -405,7 +405,7 @@ message.channel.send(`**✅ The AntiJoin Is __𝐎𝐍__ !**`)
  
  
 client.on('message', message => {
-    if(message.content.startsWith(prefix + "antifake off")) {
+    if(message.content.startsWith(prefix + "antifakeoff")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
 antijoin[message.guild.id] = {
@@ -471,14 +471,14 @@ client.on('message', async message => {
      category : 'Temporary Channels',
       channel : 'انشاء روم مؤقت'
        }
-        if(message.content.startsWith('!!temp on')){
+        if(message.content.startsWith('!!tempon')){
          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
           var ggg= message.guild.createChannel('Temporary Channels', 'category').then(cg => {
            var ccc =message.guild.createChannel('انشاء روم مؤقت', 'voice').then(ch => {
             ch.setParent(cg)
              message.channel.send('**:white_check_mark:  تم تفعيل الخاصية بنجاح **')
               client.on('message' , message => {
-               if(message.content === '!!temp off') {
+               if(message.content === '!!tempoff') {
                 if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
                  cg.delete()
                   ch.delete()
@@ -487,7 +487,7 @@ client.on('message', async message => {
                      });
                       const time = temp[message.guild.id].time
                        client.on('message' , message => {
-                        if (message.content.startsWith(prefix + "temp time")) {
+                        if (message.content.startsWith(prefix + "temptime")) {
                          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
                           let newTime= message.content.split(' ').slice(1).join(" ")
                           if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
@@ -537,6 +537,8 @@ client.on('message', async message => {
            })
           }
       });
+
+
 
 
 client.on('message', message => {
