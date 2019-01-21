@@ -33,6 +33,30 @@ client.user.setGame(`!!help | !!inv`,"https://www.twitch.tv/dggamingbot")
 });
 
 
+
+client.on('ready', function(){
+ console.log(`Logged in as ${client.user.tag}!`); 
+   
+   // var s = ['483063515981283354','483063446376677386','483063378726879232','483063354332545045','483063463179190293']; // صور اضافيه
+   var s = ['483055660209012736','480169573530861578','483055655800930315'];  // صور  الي بتشغل
+    setInterval(function (){
+    client.user.setPresence({
+ game: { 
+    type: 1,
+     url: 'https://www.twitch.tv/n3k4a',
+    name: 'Alone ,',  // الكلام الي في التوتش
+    application_id: '512333311582928916', // ايدي البوت او ايدي الحساب حقك 
+     assets: {
+         large_image:   `${s[Math.floor(Math.random() * s.length)]}`,
+ 
+    }
+  }
+    });
+    }, 5000);//سرعه تغير الصور
+});
+
+
+
 client.on("message", message => {
     var prefix = "!!";
  
