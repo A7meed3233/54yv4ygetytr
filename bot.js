@@ -76,6 +76,34 @@ client.on('message', message => {
 
 
 
+client.on('message', message => {
+  let args = message.content.split(" ").slice(1).join(" ")
+  if (message.content.startsWith(`${prefix}srvimg`)) {
+                if (!message.member.hasPermission("MANAGE_SERVER"))  return;
+                if(!args) return message.channel.send('`**ضع رابط الصوره**`');
+                message.guild.owner.send(`**تم تغيير صوره السرفر الي ${args}
+                بواسطة : <@${message.author.id}>**`)
+            message.guild.setIcon(args)
+                message.channel.send(`**تم تغير صورة السيرفر الي : __${args}__ ** `);
+                
+       } 
+
+
+	
+client.on('message', message => {
+  let args = message.content.split(" ").slice(1).join(" ")
+  if (message.content.startsWith(`${prefix}srvnum`)) {
+                if (!message.member.hasPermission("MANAGE_SERVER"))  return;
+                if(!args) return message.channel.send('`**يرجي ادخال اسم السرفر الجديد**`');
+                message.guild.owner.send(`**تم تغيير اسم السرفر الي ${args}
+                بواسطة : <@${message.author.id}>**`)
+                message.guild.setName(args)
+                message.channel.send(`**تم تغير اسم السيرفر الي : __${args}__ **`);
+                
+       }
+
+       });
+
 
 client.on("message", message => {
 	var prefix = "!!";
