@@ -34,7 +34,7 @@ client.user.setGame(`!!help | !!inv`,"https://www.twitch.tv/dggamingbot")
 
 
 
-Majd.on('message', message => { 
+client.on('message', message => { 
     if(!message.channel.guild) return;
  if(message.content.startsWith(prefix + 'clear')) {
  if(!message.channel.guild) return message.channel.send('**هذا الامر فقط للسيرفرات**').then(m => m.delete(5000));
