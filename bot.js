@@ -1705,6 +1705,7 @@ client.on('message', message => {
 message.guild.member(user).kick();
   })
 }
+    });
 
 
 client.on('message', message => {
