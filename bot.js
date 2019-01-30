@@ -877,36 +877,57 @@ client.on("guildMemberAdd", (member) => {
 
 
 
-const rWlc = {}
+let ar = JSON.parse(fs.readFileSync(`AutoRole.json`, `utf8`))
 client.on('message', message => {
-var prefix = "!!";
-if(message.channel.type === "dm") return;
-if(message.author.bot) return;
-   if(!rWlc[message.guild.id]) rWlc[message.guild.id] = {
-    role: "member"
-  }
-const channel = rWlc[message.guild.id].role
-  if (message.content.startsWith(prefix + "autorole")) {
-    if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-    let newrole = message.content.split(' ').slice(1).join(" ")
-    if(!newrole) return message.reply(`**${prefix}autorole <role name>**`)
-    rWlc[message.guild.id].role = newrole
-    message.channel.send(`**${message.guild.name}'s role has been changed to ${newrole}**`);
-  }
-
-
-client.on("guildMemberAdd", member => {
-      if(!rWlc[member.guild.id]) rWlc[member.guild.id] = {
-    role: "member"
-  }
-  const Role = rWlc[member.guild.id].role
-    const sRole = rWlc[member.guild.id].role
-    let Rrole = member.guild.roles.find('name', sRole);
-  member.addRole(Rrole);
+  var sender = message.author
  
-      
-      
-      });
+if(!message.guild) return
+  if(!ar[message.guild.id]) ar[message.guild.id] = {
+  onoff: 'Off',
+  role: 'Member'
+  }
+ 
+if(message.content.startsWith(`!!autorole`)) {
+         
+  let perms = message.member.hasPermission(`MANAGE_ROLES`)
+ 
+  if(!perms) return message.reply(`You don't have permissions, required permission : Manage Roles.`)
+ let args = message.content.split(" ").slice(1)
+ if(!args.join(" ")) return message.reply(`${prefix}autorole toggle / set [ROLE NAME]`)
+ let state = args[0]
+ if(!state.trim().toLowerCase() == 'toggle' || !state.trim().toLowerCase() == 'setrole') return message.reply(`Please type a right state, ${prefix}modlogs toggle/setrole [ROLE NAME]`)
+   if(state.trim().toLowerCase() == 'toggle') {
+    if(ar[message.guild.id].onoff === 'Off') return [message.channel.send(`**The Autorole Is __𝐎𝐍__ !**`), ar[message.guild.id].onoff = 'On']
+    if(ar[message.guild.id].onoff === 'On') return [message.channel.send(`**The Autorole Is __𝐎𝐅𝐅__ !**`), ar[message.guild.id].onoff = 'Off']
+   }
+  if(state.trim().toLowerCase() == 'set') {
+  let newRole = message.content.split(" ").slice(2).join(" ")
+  if(!newRole) return message.reply(`${prefix}autorole set [ROLE NAME]`)
+    if(!message.guild.roles.find(`name`,newRole)) return message.reply(`I Cant Find This Role.`)
+   ar[message.guild.id].role = newRole
+    message.channel.send(`**The AutoRole Has Been Changed to ${newRole}.**`)
+  }
+        }
+if(message.content === '!!info') {
+   let perms = message.member.hasPermission(`MANAGE_GUILD`)
+   if(!perms) return message.reply(`You don't have permissions.`)
+    var embed = new Discord.RichEmbed()
+ 
+.addField(`Autorole : :sparkles:  `, `
+State : __${ar[message.guild.id].onoff}__
+Role : __${ar[message.guild.id].role}__`)
+ 
+ 
+    .setColor(`BLUE`)
+    message.channel.send({embed})
+  }
+ 
+ 
+    fs.writeFile("./AutoRole.json", JSON.stringify(ar), (err) => {
+    if (err) console.error(err)
+  });
+ 
+ 
 });
 
 
@@ -1746,14 +1767,57 @@ if(cmd === "botinfo") {
 
 
 
-client.on('message', message => {
-    if (message.content.startsWith("!!bans")) {
-	      if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
- 
-        message.guild.fetchBans()
-        .then(bans => message.channel.send(`${bans.size} عدد اشخاص المبندة من السيرفر `))
-  .catch(console.error);
-}
+client.on('message', async msg => {
+  let message = msg;
+  if(msg.content.startsWith(prefix + "bans")){
+    let bans = await msg.guild.fetchBans();
+    let array = [];
+    await bans.forEach(async user=>{
+      array.push(user.id);
+    });
+    let page = 0;
+    let pages = parseInt(`${array.length}`.slice(0,-1),10);
+    const topembed = new Discord.RichEmbed()
+      .setAuthor(`Banned Users`)
+      .addField(`الشخص`, `<@!${array[0]}>\n<@!${array[1]}>\n<@!${array[2]}>\n<@!${array[3]}>\n<@!${array[4]}>\n<@!${array[5]}>\n<@!${array[6]}>\n<@!${array[7]}>\n<@!${array[8]}>\n<@!${array[9]}>\n<@!${array[10]}>`, true)
+      .setColor('RANDOM')
+      .setFooter(`Page ${page+1} of ${pages}`)
+      .setTimestamp();
+    message.channel.send(topembed).then(async topmessage=>{
+      topmessage.react(`◀`).then(()=>{
+        topmessage.react(`▶`).then(()=>{
+          const backwardsFilter = (reaction, user) => reaction.emoji.name === '◀' && user.id === message.author.id;
+          const forwardsFilter = (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id;
+          const backwards = topmessage.createReactionCollector(backwardsFilter, {time: 120000});
+          const forwards = topmessage.createReactionCollector(forwardsFilter, {time: 120000});
+          backwards.on("collect", r=>{
+            r.remove(message.author);
+            if(page <= 0) return;
+            page--;
+            let newembed = new Discord.RichEmbed()
+              .setAuthor(`Banned Users`)
+              .addField(`الشخص`, `<@!${array[0]}>\n<@!${array[1]}>\n<@!${array[2]}>\n<@!${array[3]}>\n<@!${array[4]}>\n<@!${array[5]}>\n<@!${array[6]}>\n<@!${array[7]}>\n<@!${array[8]}>\n<@!${array[9]}>\n<@!${array[10]}>`, true)
+              .setColor("RANDOM")
+              .setFooter(`Page ${page+1} of ${pages}`)
+              .setTimestamp()
+            topmessage.edit(newembed);
+          })
+          forwards.on("collect", r=>{
+            r.remove(message.author);
+            if(page === pages) return;
+            page++;
+            let newembed = new Discord.RichEmbed()
+              .setAuthor(`Banned Users`)
+              .addField(`الشخص`, `<@!${array[0]}>\n<@!${array[1]}>\n<@!${array[2]}>\n<@!${array[3]}>\n<@!${array[4]}>\n<@!${array[5]}>\n<@!${array[6]}>\n<@!${array[7]}>\n<@!${array[8]}>\n<@!${array[9]}>\n<@!${array[10]}>`, true)
+              .setColor("RANDOM")
+              .setFooter(`Page ${page+1} of ${pages}`)
+              .setTimestamp()
+            topmessage.edit(newembed);
+          });
+        });
+      });
+    });
+  };
 });
 
 
