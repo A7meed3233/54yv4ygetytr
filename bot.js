@@ -1085,7 +1085,7 @@ message.react("❌")
 client.on('message' , message => {
       if(message.author.bot) return;
      
-      if(message.content.startsWith(prefix + "rolebc")) {
+      if(message.content.startsWith(prefix + "rbc")) {
 	        if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
  
         if (!message.member.hasPermission("ADMINISTRATOR"))  return;
@@ -1116,12 +1116,6 @@ client.on('message' , message => {
             message.channel.send(`لقد تم ارسال هذه الرسالة الى ${message.guild.members.filter(m => m.roles.get(role.id)).size} عضو`)
         }
     });
-
-
-
-
-
-
 
 
 
@@ -1288,7 +1282,7 @@ client.on('message',async message => {
   let role = message.guild.roles.find('name',args) || message.guild.roles.get(args);
  
  
-  if(message.content.startsWith(prefix + "roleinfo")) {
+  if(message.content.startsWith(prefix + "inforole")) {
 	    if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
  
     if(!args) return message.reply('اكتب اسم الرتبة');
