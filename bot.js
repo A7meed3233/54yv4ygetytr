@@ -387,7 +387,7 @@ client.on("message", message => {
       .addField("Reason",`${reason}`)
       
       
-      let reportchannel = message.guild.channels.find(`name`,"log"); //حط هنا اسم روح اللوج
+      let reportchannel = message.guild.channels.find(`name`,"warns"); //حط هنا اسم روح اللوج
       if(!reportchannel) return message.channel.send("Couldn't find `log` channel. "); //حط هنا اسم روم اللوج
       
       message.delete().catch(O_o=>{});
