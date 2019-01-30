@@ -1456,54 +1456,116 @@ client.on('message', message => {
 
 
 
-client.on('message', message =>{
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
-    let prefix = '!!';
-
-if(cmd === `${prefix}suggest`) {
-	  if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+const sug = JSON.parse(fs.readFileSync('./sug.json' , 'utf8'));
  
-    var suggestMessage = message.content.substring(8)
-    let suggestEMBED = new Discord.RichEmbed()
-    .setColor(3447003)
-    .setTitle("New suggest just added!!")
-    .setDescription(`**${suggestMessage}**`)
-    .setFooter(`Suggested By : ${message.author.tag}`);
-    message.delete().catch(O_o=>{}) 
-    let suggests = message.guild.channels.find(`name`, "suggestions");
-    if (!suggests) return message.channel.send("You should make A **suggestions** channel!")
-    suggests.send(suggestEMBED);
-}
-
-});
-
-
-
 client.on('message', message => {
-    var name1 = message.mentions.users.first();
-    var reason = message.content.split(' ').slice(2).join(' ');
-    if(message.content.startsWith(prefix + 'report')) {
-	      if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+           if (!message.channel.guild) return;
  
-        if(message.author.bot) return;
-        if(!message.guild.channels.find('name', 'reports')) return message.channel.send('**الرجاء صنع روم باسم ``reports`` لارسال الريبوتات اليه**').then(msg => msg.delete(5000));
-    if(!name1) return message.reply('**منشن اسم الشخص الي تبي تبلغ عليه**').then(msg => msg.delete(3000))
-        message.delete();
-    if(!reason) return message.reply('**اكتب وش سوى**').then(msg => msg.delete(3000))
-        message.delete();
-    var abod = new Discord.RichEmbed()
-    .setTitle(`:page_with_curl: **[REPORT]** By: ${message.author.tag}`)
-    .addField('**Report For:**', `${name1}`, true)
-    .addField('**In Channel:**', `${message.channel.name}`, true)
-    .addField('**Reason:**', `${reason}`, true)
-    .setFooter(`${message.author.username}#${message.author.discriminator}`, message.author.avatarURL)
-    .setTimestamp()
-        message.guild.channels.find('name', 'reports').sendEmbed(abod)
-    message.reply('**شكرا على تبليغك**').then(msg => msg.delete(3000));
-    }
-});
+    let room = message.content.split(" ").slice(1);
+    let findroom = message.guild.channels.find('name', `${room}`)
+    if(message.content.startsWith(prefix + "setSug")) {
+        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+        if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+if(!room) return message.channel.send('Please Type The Channel Name')
+if(!findroom) return message.channel.send('Cant Find This Channel')
+let embed = new Discord.RichEmbed()
+.setTitle('**Done The Suggest Code Has Been Setup**')
+.addField('Channel:', `${room}`)
+.addField('Requested By:', `${message.author}`)
+.setThumbnail(message.author.avatarURL)
+.setFooter(`${client.user.username}`)
+message.channel.sendEmbed(embed)
+sug[message.guild.id] = {
+channel: room,
+}
+fs.writeFile("./sug.json", JSON.stringify(sug), (err) => {
+if (err) console.error(err)
+})
+   client.on('message', message => {
+ 
+ 
+    if(message.content.startsWith(`${prefix}suggest`)) {
+      if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+      let suggest = message.content.split(" ").slice(1);
+      if(!suggest) return message.reply(`**Please Type The Suggest**`)
+    let findchannel = (message.guild.channels.find('name', `${sug[message.guild.id].channel}`))
+    if(!findchannel) return message.channel.send(`Error 404: The Suggest Channel Cant Find Or Not Set To Set The Suggest Channel Type: ${prefix}setSug`)
+    message.channel.send(`Done Your Suggest Will Be Seen By The Staffs`)
+    let sugembed = new Discord.RichEmbed()
+    .setTitle('New Suggest !')
+    .addField('Suggest By:', `${message.author}`)
+    .addField('Suggest:', `${suggest}`)
+    .setFooter(client.user.username)
+    findchannel.sendEmbed(sugembed)
+        .then(function (message) {
+          message.react('✅')
+          message.react('❌')
+        })
+        .catch(err => {
+            message.reply(`Error 404: The Suggest Channel Cant Find Or Not Set To Set The Suggest Channel Type: ${prefix}setSug`)
+            console.error(err);
+        });
+        }
+      })
+    }})
+
+
+
+const reportjson = JSON.parse(fs.readFileSync('./report.json' , 'utf8'));
+ 
+client.on('message', message => {
+           if (!message.channel.guild) return;
+ 
+    let room = message.content.split(" ").slice(1);
+    let findroom = message.guild.channels.find('name', `${room}`)
+    if(message.content.startsWith(prefix + "setReport")) {
+        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+        if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+if(!room) return message.channel.send('Please Type The Channel Name')
+if(!findroom) return message.channel.send('Cant Find This Channel')
+let embed = new Discord.RichEmbed()
+.setTitle('**Done The report Code Has Been Setup**')
+.addField('Channel:', `${room}`)
+.addField('Requested By:', `${message.author}`)
+.setThumbnail(message.author.avatarURL)
+.setFooter(`${client.user.username}`)
+message.channel.sendEmbed(embed)
+reportjson[message.guild.id] = {
+channel: room,
+}
+fs.writeFile("./report.json", JSON.stringify(reportjson), (err) => {
+if (err) console.error(err)
+})
+client.on('message', message => {
+ 
+    if(message.content.startsWith(`${prefix}report`)) {
+        let  user  =  message.mentions.users.first();
+      if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
+    let reason = message.content.split(" ").slice(2).join(" ");
+      if(!user)  return  message.channel.send("**You didn\'t mention the user to report**")
+      if(!reason) return message.reply(`**Please provide a reason**`)
+    let findchannel = (message.guild.channels.find('name', `${reportjson[message.guild.id].channel}`))
+    if(!findchannel) return message.reply(`Error 404: The report Channel Cant Find Or Not Set To Set The report Channel Type: ${prefix}setReport`)
+    message.channel.send(`Done Thank You For Your Report Will Be Seen By The Staffs`)
+    let sugembed = new Discord.RichEmbed()
+    .setTitle('New Report !')
+    .addField('Report By:', `${message.author}`)
+    .addField('Reported User:', `${user}`)
+    .addField('Report Reason:', `${reason}`)
+    .setFooter(client.user.username)
+    findchannel.sendEmbed(sugembed)
+        .then(function (message) {
+          message.react('✅')
+          message.react('❌')
+        })
+        .catch(err => {
+            message.reply(`Error 404: The report Channel Cant Find Or Not Set To Set The report Channel Type: ${prefix}setReport`)
+            console.error(err);
+        });
+        }
+      }
+)}
+})
 
 
 
@@ -1646,27 +1708,41 @@ client.on('message', message => {
 
 
 client.on('message', message => {
-    if (message.content.startsWith("!!botinfo")) {
- 
-    message.channel.send({
-        embed: new Discord.RichEmbed()
-            .setAuthor(client.user.username,client.user.avatarURL)
-            .setThumbnail(client.user.avatarURL)
-            .setColor('RANDOM')
-            .setTitle('``INFO Slash Bot`` ')
-            .addField('``My Ping``' , [`${Date.now() - message.createdTimestamp}` + 'MS'], true)
-            .addField('``RAM Usage``', `[${(process.memoryUsage().rss / 1048576).toFixed()}MB]`, true)
-            .addField('``servers``', [client.guilds.size], true)
-            .addField('``channels``' , `[ ${client.channels.size} ]` , true)
-            .addField('``Users``' ,`[ ${client.users.size} ]` , true)
-            .addField('``My Name``' , `[ ${client.user.tag} ]` , true)
-            .addField('``My ID``' , `[ ${client.user.id} ]` , true)
-                  .addField('``My Prefix``' , `[ !! ]` , true)
-                  .addField('``My Language``' , `[ Java Script ]` , true)
-                  .setFooter('By | A7med')
+  let args = message.content.split(" ")
+  if (args[0].toLowerCase().startsWith(prefix+'roles')) {
+    let str = "";
+    var role = message.guild.roles.forEach(role => {
+      str +=" "+role.name+'\n'
     })
-}
+    message.channel.send(`\`\`\`${str}\`\`\``)
+  }
+})
+
+
+
+client.on('message',async message => {
+if(message.author.bot || message.channel.type === 'dm') return;
+let args = message.content.split(" ").slice(1);
+let cmd = message.content.split(" ")[0].substring(prefix.length);
+if(!message.content.startsWith(prefix)) return;
+if(cmd === "botinfo") {
+        let ustat = require('ustat');
+        let stackos = require('stackos').info;
+        let cpu = require('cpu');
+    let pretty = require('pretty-ms');
+        let i = new Discord.RichEmbed();
+       
+          await i.setColor("#36393e");
+      await i.setThumbnail(message.author.avatarURL);
+          await i.addField('- **General Information**', `» Servers: \`${hero.guilds.size}\`\n» Mutual: \`${hero.guilds.filter(r => r.members.array().includes(message.author.id)).size}\`\n» Users: \`${hero.users.size}\``);
+      await i.addField('- **Memory Information**', `» CPU: \`${Math.round((process.cpuUsage().user + process.cpuUsage().system) / 2048)} MB ( ${cpu.num()} % )\`\n» Ram: \`${Math.round((stackos.memory.total / 1000000))} MB ( ${ustat.usedmem('kb') % 100} % )\``);
+      await i.addField('- **System Information**', `» Platform: \`${stackos.os} ( ${stackos.arch} Bit )\`\n» Processor: \`${(stackos.cpus.model).split("(R)")[1]} ( ${stackos.cpus.cores} Cores )\``);
+      await i.addField('- **Additional Information**', `» Latency: \`${Math.round(hero.ping)} ms\`\n» Node.js: \`${process.version.replace('v', '') + ' v'}\`\n» Discord.js: \`${require('./package.json').dependencies["discord.js"].replace('^', '') + ' v'}\`\n» Uptime: \`${pretty(hero.uptime, { verbose: true })}\``);
+      await i.setFooter('- © A7med .', 'https://cdn.discordapp.com/avatars/475396751549792277/67c29dd84da4abe7144af04e11c8120b.png?size=2048');
+      await message.channel.send(i);
+  }
 });
+
 
 
 
@@ -2019,7 +2095,7 @@ client.on("message", message => {
              
 ==================== **اوامر ادارية** =====================
 !!suggest ➾ لارسال اقتراح لازم تسوي روم باسم suggetions
-!!report ➾ لارسال تبليغ عن شخص لازم تسوي روم باسم reports
+!!➾ لارسال تبليغ عن شخص لازم تسوي روم باسم reports
 !!bc ➾ لارسال رساله لجميع الاعضاء
 !!warn ➾ لاعطاء تحذير لشخص
 !!role ➾ لاعطاء رتبة لشخص
