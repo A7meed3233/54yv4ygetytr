@@ -2213,7 +2213,6 @@ const sql = require("sqlite");
  const pretty = require('pretty-ms') 
 
 var servers = [];
-var queue = [];
 var guilds = [];
 var queueNames = [];
 var isPlaying = false;
