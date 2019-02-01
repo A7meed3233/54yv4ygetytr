@@ -8,7 +8,7 @@ const prefix = '!!'
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`- 91%`,"https://www.twitch.tv/dggamingbot")
+client.user.setGame(`!!help | !!inv`,"https://www.twitch.tv/dggamingbot")
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
@@ -293,48 +293,6 @@ client.on('message',async message => {
 
 
 
-client.on('message', message => {
-     if(!message.channel.guild) return;
-var prefix = "!!";
-                if(message.content.startsWith(prefix + 'bots')) {
-
-    
-    if (message.author.bot) return;
-    let i = 1;
-        const botssize = message.guild.members.filter(m=>m.user.bot).map(m=>`${i++} - <@${m.id}>`);
-          const embed = new Discord.RichEmbed()
-          .setAuthor(message.author.tag, message.author.avatarURL)
-          .setDescription(`**Found ${message.guild.members.filter(m=>m.user.bot).size} bots in this Server**
-${botssize.join('\n')}`)
-.setFooter(client.user.username, client.user.avatarURL)
-.setTimestamp();
-message.channel.send(embed)
-
-}
-
-
-});
- 
-
-
-client.on('message', message => {
-  var prefix = "!!"; 
-if (message.content.startsWith(prefix + 'perms')) {
-         if(!message.channel.guild) return;
-         var perms = JSON.stringify(message.channel.permissionsFor(message.author).serialize(), null, 4);
-         var zPeRms = new Discord.RichEmbed()
-         .setColor('RANDOM')
-         .setTitle(':tools: Permissions')
-         .addField('Your Permissions:',perms)
-                  message.channel.send({embed:zPeRms});
-
-    }
-});
-
-
-
-
-
 
 
 client.on('message', message => {
@@ -608,6 +566,8 @@ channel.guild.owner.send(`<@!${channelremover.id}>
  channelr[channelremover.id].deleted = 0;
   },Otime)
   });
+
+
 
 
 var stopReacord = true;
