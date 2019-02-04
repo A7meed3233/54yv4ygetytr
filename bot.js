@@ -378,6 +378,7 @@ client.on('message', message => {
     });
 
 
+const moment = require('moment');
 
 client.on("guildMemberAdd", m => {
         let room = m.guild.channels.find(a => a.name === 'welcome'); //
