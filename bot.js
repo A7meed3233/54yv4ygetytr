@@ -34,6 +34,9 @@ client.user.setGame(`!!help | !!inv`,"https://www.twitch.tv/dggamingbot")
 
 
 
+
+
+
 client.on('message', message => { 
     if(!message.channel.guild) return;
  if(message.content.startsWith(prefix + 'clear')) {
