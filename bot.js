@@ -2487,13 +2487,13 @@ const botSettings = require("./config.json");
 const axios = require("axios");
 const yt = require("ytdl-core");
 const getYTID = require("get-youtube-id");
-const prefix = botSettings.prefix;
 const ytApiKey = botSettings.ytApiKey;
 const youtube = new YouTube(ytApiKey);
 const bot = new Discord.Client({
 	disableEveryone: true
 });
 
+let commandsList = fs.readFileSync('commands.md', 'utf8');
 
 /* MUSIC VARIABLES */
 let queue = []; // Songs queue
