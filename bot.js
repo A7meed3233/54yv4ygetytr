@@ -191,6 +191,7 @@ message.channel.send(message.member + '**جارى انشاء الرتب**').then
 	  } else {
    message.reply("**فقط للبرميوم*");
 }
+								   })	
   }, 3000);//Baron#1500
 })
 }//Baron#1500
@@ -470,6 +471,7 @@ ch.setUserLimit(15)
 	  	  } else {
    message.reply("**فقط للبرميوم*");
 }
+								      })
   })
     })//Baron#1500
  }
