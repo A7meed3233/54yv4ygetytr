@@ -477,6 +477,7 @@ ch.setUserLimit(15)
 })//Baron#1500
 
 
+
 client.on('message', message => { 
     if(!message.channel.guild) return;
  if(message.content.startsWith(prefix + 'clear')) {
