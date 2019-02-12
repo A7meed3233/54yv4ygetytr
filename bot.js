@@ -8,7 +8,7 @@ const prefix = '!!'
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`!!help | !!invite`,"https://www.twitch.tv/dggamingbot")
+client.user.setGame(`صيانة`,"https://www.twitch.tv/dggamingbot")
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
