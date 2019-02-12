@@ -3,7 +3,6 @@ const client = new Discord.Client();
 const fs = require('fs');
 client.setMaxListeners(100)
 const prefix = '!!'
-const Prem = ['512333311582928916']
 
  
  
@@ -56,7 +55,6 @@ client.on("message", message =>{//Baron#1500
 let roles = message.guild.roles.find(all=> all.name === "⇁『KiNG 』‏‏༄  ❥", "⇁『LEADER』‏‏༄  ❥", "⇁『BiG BOSS 』‏‏༄  ❥", "⇁『CAPTAIN 』‏‏༄  ❥", "⇁『SERGEANT 』‏‏༄  ❥",
 "⇁『youtuber 』‏‏༄  ❥", "⇁『ACTIVE 』‏‏༄  ❥");//Baron#1500
 if(message.content.startsWith(prefix + "roles")) {//Baron#1500
-	  if(Prem.some(word => message.author.id.includes(word)) ) {  return
   if(message.author.bot) return;//Baron#1500
   if(roles) return message.reply('**الرتب موجوده بالفعل**')//Baron#1500
   //دى بقا الرتب ال انت عاوزو يعملها
@@ -188,9 +186,7 @@ message.guild.createRole({//Baron#1500
 message.channel.send(message.member + '**جارى انشاء الرتب**').then((m)=> {
   setTimeout(() => {//Baron#1500
     m.edit('**تم انشاء الرتب بنجاح**')
-	  }) else {
-   message.reply("**فقط للبرميوم*");
-}
+
   }, 3000);//Baron#1500
 })
 }//Baron#1500
@@ -467,10 +463,7 @@ ch.setUserLimit(15)
   message.guild.createChannel('» Group.' , 'voice').then(ch => {
     ch.setParent(tb);
     ch.setUserLimit(15)
-	  	  }) else {
-   message.reply("**فقط للبرميوم*");
-}
-								      })
+
   })
     })//Baron#1500
  }
