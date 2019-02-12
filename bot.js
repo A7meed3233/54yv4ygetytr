@@ -186,7 +186,6 @@ message.guild.createRole({//Baron#1500
 message.channel.send(message.member + '**جارى انشاء الرتب**').then((m)=> {
   setTimeout(() => {//Baron#1500
     m.edit('**تم انشاء الرتب بنجاح**')
-
   }, 3000);//Baron#1500
 })
 }//Baron#1500
@@ -205,7 +204,6 @@ client.on("message", message =>{
   let roles = message.guild.roles.find(all=> all.name === "⇁『KiNG 』‏‏༄  ❥", "⇁『LEADER』‏‏༄  ❥", "⇁『BiG BOSS 』‏‏༄  ❥", "⇁『CAPTAIN 』‏‏༄  ❥", "⇁『SERGEANT 』‏‏༄  ❥",
 "⇁『youtuber 』‏‏༄  ❥", "⇁『ACTIVE 』‏‏༄  ❥");//Baron#1500
   if(message.content.startsWith(prefix + "channels")) {
-	  	  if(Prem.some(word => message.author.id.includes(word)) ) {  return
 if(!roles) return message.reply("**من فضلك قم بانشاء الرتب اولا اكتب !!roles**")//Baron#1500
 if(roles) {//Baron#1500
 message.reply("**جارى انشاء الرومات**").then((c)=> {//Baron#1500
@@ -463,7 +461,6 @@ ch.setUserLimit(15)
   message.guild.createChannel('» Group.' , 'voice').then(ch => {
     ch.setParent(tb);
     ch.setUserLimit(15)
-
   })
     })//Baron#1500
  }
