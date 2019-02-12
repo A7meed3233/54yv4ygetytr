@@ -2487,7 +2487,6 @@ const botSettings = require("./config.json");
 const axios = require("axios");
 const yt = require("ytdl-core");
 const getYTID = require("get-youtube-id");
-const fetchVideoInfo = require("youtube-info");
 const prefix = botSettings.prefix;
 const ytApiKey = botSettings.ytApiKey;
 const youtube = new YouTube(ytApiKey);
