@@ -2488,7 +2488,6 @@ const axios = require("axios");
 const yt = require("ytdl-core");
 const getYTID = require("get-youtube-id");
 const ytApiKey = botSettings.ytApiKey;
-const youtube = new YouTube(ytApiKey);
 const bot = new Discord.Client({
 	disableEveryone: true
 });
