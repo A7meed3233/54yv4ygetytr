@@ -188,10 +188,9 @@ message.guild.createRole({//Baron#1500
 message.channel.send(message.member + '**جارى انشاء الرتب**').then((m)=> {
   setTimeout(() => {//Baron#1500
     m.edit('**تم انشاء الرتب بنجاح**')
-	  } else {
+	  }) else {
    message.reply("**فقط للبرميوم*");
 }
-								   })	
   }, 3000);//Baron#1500
 })
 }//Baron#1500
@@ -468,7 +467,7 @@ ch.setUserLimit(15)
   message.guild.createChannel('» Group.' , 'voice').then(ch => {
     ch.setParent(tb);
     ch.setUserLimit(15)
-	  	  } else {
+	  	  }) else {
    message.reply("**فقط للبرميوم*");
 }
 								      })
