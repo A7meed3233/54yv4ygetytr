@@ -41,7 +41,8 @@
     "string-similarity": "^3.0.0",
     "anti-spam": "^0.2.7",
     "axios": "^0.18.0",
-    "hh-mm-ss": "^1.2.0"
+    "hh-mm-ss": "^1.2.0",
+    "gif-search": "^2.0.1"
   },
   "engines": {
     "node": "8.4.0"
