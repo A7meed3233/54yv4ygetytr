@@ -42,7 +42,8 @@
     "anti-spam": "^0.2.7",
     "axios": "^0.18.0",
     "hh-mm-ss": "^1.2.0",
-    "gif-search": "^2.0.1"
+    "gif-search": "^2.0.1",
+    "quick.db": "^7.0.0-b22"
   },
   "engines": {
     "node": "8.4.0"
