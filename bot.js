@@ -33,23 +33,6 @@ client.user.setGame(`!!help | !!invite`,"https://www.twitch.tv/dggamingbot")
 });
 
 
-client.on("message", message => {
-    if (message.content.match(/([A-Z0-9]|-|){24}.([A-Z0-9]|-|){6}.([A-Z0-9]|-|){27}|mfa.([A-Z0-9]|-|){84}/gi)) {
-        if(!message.guild.members.get(client.user.id).hasPermission('MANAGE_MESSAGES')) return message.channel.send('I need Permission `MANAGE_MESSAGE`To delete Tokens')
-        message.delete();
-        message.reply(`مخك وين ترسل التوكن لحول`);
-        return;
-    }
-    if(message.channel.type === "dm"){
-    if (message.content.match(/([A-Z0-9]|-|){24}.([A-Z0-9]|-|){6}.([A-Z0-9]|-|){27}|mfa.([A-Z0-9]|-|){84}/gi)) {
-
-        message.reply(`مخك وين ترسل التوكن لحول`);
-        return;
-    }
-}
-});
-
-
 const db = require('quick.db')
 client.on('guildMemberAdd', m => {
   let enabled = db.get(`autorole.${m.guild.id}.enabled`)
