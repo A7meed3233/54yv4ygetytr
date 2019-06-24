@@ -33,58 +33,6 @@ client.user.setGame(`!!help | !!invite`,"https://www.twitch.tv/dggamingbot")
 });
 
 
-const db = require('quick.db')
-client.on('guildMemberAdd', m => {
-  let enabled = db.get(`autorole.${m.guild.id}.enabled`)
-  if(enabled === 'off') return
-  let roleID = db.get(`autorole.${m.guild.id}.role`)
-  if(roleID === null) return
-  let role = m.guild.roles.get(roleID)
-  if(role === undefined) return
-  m.addRole(role,'auto role')
-})
-client.on('message', msg => {
-  let params = msg.content.slice(prefix.length).trim().split(/ +/g);
-  if(msg.author.bot) return;
-  if(msg.content.startsWith(prefix + "autorole")) {
-    if(params[1].toLowerCase() === 'set') {
-      if(!params[2]) return msg.channel.send(`**اكتب اسم الرتبة او منشنها**`)
-    let role = msg.mentions.roles.first() || msg.guild.roles.find(r => r.name.toLowerCase().startsWith(params[2].toLowerCase()))
-    if(role === undefined) return msg.channel.send(`**لم استطع العثور على هذه الرتبة**`)
-    db.set(`autorole.${msg.guild.id}.role`, role.id)
-    msg.channel.send(`تم اعداد الاوتو رول للرتبة ${role}`)
-  }
-    if(params[1].toLowerCase() === 'off') {
-      let enabled = db.get(`autorole.${msg.guild.id}.enabled`)
-      if(enabled === 'off') return msg.channel.send(`**الاوتو رول موقفة بالفعل**`)
-      db.set(`autorole.${msg.guild.id}.enabled`, 'off')
-      msg.channel.send(`**تم ايقاف الاوتو رول بنجاح**`)
-    }
-    if(params[1].toLowerCase() === 'on') {
-      let enabled = db.get(`autorole.${msg.guild.id}.enabled`)
-      if(enabled === 'on') return msg.channel.send(`**الاوتو رول مفعلة بالفعل**`)
- 
-      db.set(`autorole.${msg.guild.id}.enabled`, 'on')
-      msg.channel.send(`**تم تشغيل الاوتو رول بنجاح**`)
-    }
-  }
-})
-
-var antispam = require("anti-spam");//npm i anti-spam
- 
-antispam(client, {
-  warnBuffer: 3, //الحد الأقصى المسموح به من الرسائل لإرسالها في الفاصل الزمني قبل الحصول على تحذير.
-  maxBuffer: 5, // الحد الأقصى المسموح به من الرسائل لإرسالها في الفاصل الزمني قبل الحصول على ميوت.
-  interval: 1000, // مقدار الوقت قبل حصول باند
-  warningMessage: "stop spamming.", // رسالة تحذير اذا سوا سبام!
-  roleMessage: "Muted!!", // الرسالة الي تجي اذا شخص اخذ ميوت
-  roleName: "Muted", // اسم رتبة الميوت
-  maxDuplicatesWarning: 7, // عدد الرسايل الي قبل التحذيرات
-  maxDuplicatesBan: 10, // عدد الرسايل الي يقدر المستخدم يرسلها قبل الميوت
-  time: 10, // عدد الوقت الي يجلس لين تسحب رتبة الميوت من الشخص الحسبة برمجية وليست كتابية 
-});
-
-
 
 client.on("message", message =>{//Baron#1500
 //السطر ال تحت لمنع تكرار انشاء الرتب لو عاوز تغير اسم الرتب غيرها وحط اسمها فى السطر ال تحت كمان علشان ميحصلش سبام
@@ -546,6 +494,8 @@ client.on('message', message => {
  });
  
 
+
+
 client.on('message', msg => {
 	var prefix = "!!";
   if (msg.author.bot) return;
@@ -621,6 +571,7 @@ client.on("message", message => {
 		} 
 	} 
 });
+
 
 
 
@@ -792,32 +743,6 @@ client.on('message',async message => {
 
 
 
-
-client.on('message', message => {
-            var prefix = "!!";
-    if (message.author.bot) return;
-    if (!message.content.startsWith(prefix)) return;
-
-    let command = message.content.split(" ")[0];
-    command = command.slice(prefix.length);
-
-    let args = message.content.split(" ").slice(1);
-
-    if (command == "embed") {
-        if (!message.channel.guild) return message.reply('** This command only for servers **');
-        let say = new Discord.RichEmbed()
-            .addField('Emebad:', `${message.author.username}#${message.author.discriminator}`)
-            .setDescription(args.join("  "))
-            .setColor(0x23b2d6)
-        message.channel.sendEmbed(say);
-        message.delete();
-    }
-});
-
-
-
-
-
 client.on("message", message => {
     if(message.author.bot) return;
     if(message.channel.type === 'dm') return;
@@ -877,6 +802,8 @@ client.on("guildMemberAdd", m => {
         return Math.round((second-first)/(1000*60*60*24));
     };
 });
+
+
 
 
 client.on('message', message => {
@@ -990,6 +917,8 @@ channel.guild.owner.send(`<@!${channelremover.id}>
 
 
 
+
+
 var stopReacord = true;
 var reactionRoles = [];
 var definedReactionRole = null;
@@ -1048,10 +977,12 @@ client.on('messageReactionRemove', (reaction, user) => {
 
 
 
+
+
 client.on('message', ( message ) => {
   if(message.author.bot) return;
 
-  if(message.channel.id !== '531572317051158538') return;
+  if(message.channel.id !== '592788639717785612') return;
 
   let types = [
     'jpg',
@@ -1090,6 +1021,8 @@ client.on('message', ( message ) => {
   }
 
 })
+
+
 
 
 
@@ -1179,6 +1112,7 @@ client.on("guildMemberAdd", member => {
 :race_car: => يمكنك دعوة البوت إلي سيرفرك عن طريق هذا الرابط فقط : https://discordapp.com/oauth2/authorize?client_id=531978226742853643&scope=bot&permissions=8 ** `) 
 }).catch(console.error)
 })
+
 
 
 
@@ -1944,7 +1878,7 @@ client.on("message", (message) => {
 
 client.on('guildCreate', guild => {
     
-  client.channels.get("531589793235206144")
+  client.channels.get("592804628010369044")
 const embed = new Discord.RichEmbed()
    .setAuthor(`بوتك دخل سيرفر جديد مبروك ✅`)
    .setDescription(`**
@@ -1956,7 +1890,7 @@ Servers Counter : __${client.guilds.size}__**`)
          .setColor("#f3ae10")
          .addField("New Server!")
          .setFooter('Slash Bot' , client.user.avatarURL)
-           client.channels.get("531589793235206144").send({embed});
+           client.channels.get("592804628010369044").send({embed});
 }
 
 );
@@ -1964,7 +1898,7 @@ Servers Counter : __${client.guilds.size}__**`)
 
 
 client.on('guildDelete', guild => {
-  client.channels.get("531589793235206144")
+  client.channels.get("592804628010369044")
 const embed = new Discord.RichEmbed()
    .setAuthor(`Slash Bot Bot left a server ❎`)
    .setDescription(`**
@@ -1975,7 +1909,7 @@ Members Count: __${guild.memberCount}__
 Servers Counter : __${client.guilds.size}__**`)
          .setColor("#f3ae10")
          .setFooter('Slash Bot' , client.user.avatarURL)
-           client.channels.get("531589793235206144").send({embed});
+           client.channels.get("592804628010369044").send({embed});
 }
 
 );
